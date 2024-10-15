@@ -34,7 +34,11 @@ public class GameWorld
         }
     }
     
-
+    public void InitializeWorld(int width, int height, List<Biome> biomes)
+    {
+        WorldMap = GameWorldGenerator.GenerateWorldMap(width, height, biomes);
+    }
+    
     public void AddCharacter(Character character)
     {
         WorldCharacters.Add(character);
