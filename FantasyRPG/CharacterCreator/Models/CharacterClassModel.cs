@@ -29,3 +29,13 @@ public class Archer : Character
         Console.WriteLine($"Archer: {Name}, Health: {Health}, Agility: {Agility}, Strength: {Strength}");
     }
 }
+
+public class NPC : Character
+{
+    public NPC(string name) : base(name, 50, 20, 20, 20) { }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"NPC: {Name}, Health: {Health}, Agility: {Agility}, Strength: {Strength}");
+    }
+}
