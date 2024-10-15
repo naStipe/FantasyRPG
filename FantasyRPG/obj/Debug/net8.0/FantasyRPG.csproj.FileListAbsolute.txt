@@ -1,0 +1,15 @@
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\bin\Debug\net8.0\FantasyRPG.exe
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\bin\Debug\net8.0\FantasyRPG.deps.json
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\bin\Debug\net8.0\FantasyRPG.runtimeconfig.json
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\bin\Debug\net8.0\FantasyRPG.dll
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\bin\Debug\net8.0\FantasyRPG.pdb
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\FantasyRPG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\FantasyRPG.AssemblyInfoInputs.cache
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\FantasyRPG.AssemblyInfo.cs
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\FantasyRPG.csproj.CoreCompileInputs.cache
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\FantasyRPG.sourcelink.json
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\FantasyRPG.dll
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\refint\FantasyRPG.dll
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\FantasyRPG.pdb
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\FantasyRPG.genruntimeconfig.cache
+C:\Users\Bakery\RiderProjects\FantasyRPG\FantasyRPG\obj\Debug\net8.0\ref\FantasyRPG.dll
