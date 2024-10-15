@@ -9,3 +9,13 @@ public class Warrior : Character
         Console.WriteLine($"Warrior: {Name}, Health: {Health}, Strength: {Strength}, Agility: {Agility}");
     }
 }
+
+public class Mage : Character
+{
+    public Mage(string name) : base(name, 80, 200, 50, 40) { }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"Mage: {Name}, Health: {Health}, Mana: {Mana}, Agility: {Agility}");
+    }
+}
