@@ -37,7 +37,37 @@ internal class Program
         {
             character.DisplayInfo();
         }
+        
+        // Item creation examples
+        ItemFacotry commonItemFactory = new CommonItemFactory();
 
+        Weapon commonWeapon = commonItemFactory.CreateWeapon();
+
+        commonWeapon.DisplayInfo();
+
+        ItemFacotry legendaryItemFactory = new LegendaryItemFactory();
+
+        Weapon legendaryWeapon = legendaryItemFactory.CreateWeapon();
+
+        legendaryWeapon.DisplayInfo();
+
+
+        // Character actions
+        // Get arnold the warrior
+        Character arnold = gameWorld.WorldCharacters.First(character => character.Name == "Arnold");
+
+        arnold.PerformAction();
+
+        // Set arnold state to action
+        arnold.SetState(new ActionState(new AttackAction()));
+
+        // Perform an action using the default melee attack
+        arnold.PerformAction();
+
+        // Set arnold into defending state
+        arnold.SetState(new DefendingState());
+        arnold.PerformAction();
+        
         GameWorldGenerator.PrintMap(gameWorld.WorldMap);
     }
 }
