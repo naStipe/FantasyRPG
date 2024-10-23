@@ -19,7 +19,28 @@ public abstract class Character
         Mana = mana;
         Strength = strength;
         Agility = agility;
+        
+        
+        // Default state and action
+        _currentState = new IdleState();
+        _currentAction = new DefaultAction();
     }
 
     public abstract void DisplayInfo();
+    
+    public void SetAction(IActionStrategy actionStrategy)
+    {
+        _currentAction = actionStrategy;
+        _currentState = new ActionState(_currentAction);
+    }
+
+    public void SetState(ICharacterState newState)
+    {
+        _currentState = newState;
+    }
+
+    public void PerformAction()
+    {
+        _currentState.HandleState(Name);
+    }
 }
