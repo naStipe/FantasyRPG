@@ -21,6 +21,20 @@ public abstract class Item
     public abstract void DisplayInfo();
 }
 
+public class Weapon : Item 
+{
+    private WeaponTypeEnum WeaponType { get; set; }
+    
+    public Weapon(string name, string description, RarityEnum rarity, WeaponTypeEnum type) : base(name, description, rarity) { 
+        WeaponType = type;
+    }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"{Name} is a weapon of {Rarity} rarity. Description: {Description}");
+    }
+}
+
 public enum RarityEnum
 {
     Common,
