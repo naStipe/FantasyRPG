@@ -35,6 +35,17 @@ public class Weapon : Item
     }
 }
 
+public class Potion : Item
+{
+    public Potion(string name, string description, RarityEnum rarity) : base(name, description, rarity) { }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"{Name} is a potion of {Rarity} rarity. Description: {Description}");
+    }
+}
+
+
 public enum RarityEnum
 {
     Common,
