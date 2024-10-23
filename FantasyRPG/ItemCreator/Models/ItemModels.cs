@@ -10,20 +10,18 @@ public abstract class Item
     public RarityEnum Rarity { get; set; }
     
     
+}
 
+public enum RarityEnum
+{
+    Common,
+    Magic,
+    Rare,
+    Legendary
+}
 
-
-    public enum RarityEnum
-    {
-        Common,
-        Magic,
-        Rare,
-        Legendary
-    }
-
-    public enum WeaponTypeEnum
-    {
-        Melee,
-        Ranged
-    }
+public enum WeaponTypeEnum
+{
+    Melee,
+    Ranged
 }
