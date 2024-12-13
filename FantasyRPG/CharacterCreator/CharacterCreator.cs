@@ -1,8 +1,6 @@
-using FantasyRPG.CharacterCreator.Models;
+using DesignPatternsFantasyRPG.CharacterCreator.Models;
 
-namespace FantasyRPG.CharacterCreator;
-
-public class CharacterCreator
+namespace DesignPatternsFantasyRPG.CharacterCreator
 {
     public abstract class CharacterFactory
     {

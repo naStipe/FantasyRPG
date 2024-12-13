@@ -2,34 +2,24 @@ using DesignPatternsFantasyRPG.CharacterCreator.Models;
 
 namespace DesignPatternsFantasyRPG.CharacterCreator
 {
-    public interface IEnemyFactory
+    public class EnemyManager
     {
-        Enemy CreateEnemy(int rank);
-    }
+        private Dictionary<string, IEnemyFactory> _factories = new Dictionary<string, IEnemyFactory>();
 
-    public class SlimeFactory : IEnemyFactory
-    {
-        public Enemy CreateEnemy(int rank)
+        public EnemyManager()
         {
-            // Define slime attributes, adjusting based on rank if necessary
-            return new Enemy("Slime", health: 50 + rank * 10, mana: 0, strength: 10, agility: 5, rank: rank);
+            _factories["Slime"] = new SlimeFactory();
+            _factories["Goblin"] = new GoblinFactory();
+            _factories["Dragon"] = new DragonFactory();
+        }
+
+        public Enemy SpawnEnemy(string enemyType, int rank)
+        {
+            if (_factories.ContainsKey(enemyType))
+            {
+                return _factories[enemyType].CreateEnemy(rank);
+            }
+            throw new ArgumentException("Unknown enemy type.");
         }
     }
-
-    public class GoblinFactory : IEnemyFactory
-    {
-        public Enemy CreateEnemy(int rank)
-        {
-            return new Enemy("Goblin", health: 80 + rank * 15, mana: 10, strength: 15, agility: 20, rank: rank);
-        }
-    }
-
-    public class DragonFactory : IEnemyFactory
-    {
-        public Enemy CreateEnemy(int rank)
-        {
-            return new Enemy("Dragon", health: 500 + rank * 50, mana: 200, strength: 100, agility: 40, rank: rank);
-        }
-    }
-
 }
