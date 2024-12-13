@@ -1,74 +1,167 @@
-﻿using FantasyRPG.GameWorldCreator;
-using FantasyRPG.GameWorldCreator.Models;
+﻿﻿using DesignPatternsFantasyRPG.CharacterCreator.Models;
+using DesignPatternsFantasyRPG.CharacterCreator;
+using DesignPatternsFantasyRPG.GameWorldCreator.Models;
+using DesignPatternsFantasyRPG.GameWorldCreator;
+using DesignPatternsFantasyRPG.CommandHandler;
+using DesignPatternsFantasyRPG.ItemCreator;
+using DesignPatternsFantasyRPG.ItemCreator.Models;
 
-namespace FantasyRPG;
-
-internal class Program
+namespace DesignPatternsFantasyRPG
 {
-    static void Main(string[] args)
+    internal class Program
     {
-        var gameWorld = GameWorld.Instance;
-
-        var biomes = new List<Biome>
+        static void Main(string[] args)
         {
-            new Biome("Lake", 0, 10),
-            new Biome("Desert", 10, 25),
-            new Biome("Forest", 25, 100),
-            new Biome("Plains", 100, 150),
-            new Biome("Mountain", 150, 200)
-        };
+            // Initialize the game world instace
+            var gameWorld = GameWorld.Instance;
 
-        gameWorld.InitializeWorld(10, 10, biomes);
+            // Define biomes
+            var biomes = new List<Biome>
+            {
+                new Biome("Lake", 0, 10),
+                new Biome("Desert", 10, 25),
+                new Biome("Forest", 25, 100),
+                new Biome("Plains", 100, 150),
+                new Biome("Mountain", 150, 200)
+            };
 
-        CharacterCreator.CharacterCreator.CharacterFactory warriorFactory = new CharacterCreator.CharacterCreator.WarriorFactory();
-        CharacterCreator.CharacterCreator.CharacterFactory mageFactory = new CharacterCreator.CharacterCreator.MageFactory();
-        CharacterCreator.CharacterCreator.CharacterFactory archerFactory = new CharacterCreator.CharacterCreator.ArcherFactory();
+            // Generate the world map
+            gameWorld.InitializeWorld(10, 10, biomes);
 
-        gameWorld.AddCharacter(warriorFactory.CreateCharacter("Conan"));
-        gameWorld.AddCharacter(mageFactory.CreateCharacter("Merlin"));
-        gameWorld.AddCharacter(archerFactory.CreateCharacter("Legolas"));
+            // Create characters using the factory pattern
+            CharacterFactory warriorFactory = new WarriorFactory();
+            CharacterFactory mageFactory = new MageFactory();
+            CharacterFactory archerFactory = new ArcherFactory();
 
-        CharacterCreator.CharacterCreator.NpcFactory npcFactory = new CharacterCreator.CharacterCreator.NpcFactory();
+            // Display character information
+            gameWorld.AddCharacter(warriorFactory.CreateCharacter("Conan"));
+            gameWorld.AddCharacter(mageFactory.CreateCharacter("Merlin"));
+            gameWorld.AddCharacter(archerFactory.CreateCharacter("Legolas"));
 
-        gameWorld.AddCharacter(npcFactory.CreateCharacter("Villager"));
-        gameWorld.AddCharacter(npcFactory.CreateCharacter("Villager"));
+            // Add NPCs to the game world
+            // TODO: Extend NPC class -> Jobs, Skills, Inventory, Roles
+            NpcFactory npcFactory = new NpcFactory();
 
-        foreach (var character in gameWorld.WorldCharacters)
-        {
-            character.DisplayInfo();
+            gameWorld.AddCharacter(npcFactory.CreateCharacter("Villager"));
+            gameWorld.AddCharacter(npcFactory.CreateCharacter("Villager"));
+
+            foreach (var character in gameWorld.WorldCharacters)
+            {
+                character.DisplayInfo();
+            }
+
+            // Item creation examples
+            ItemFacotry commonItemFactory = new CommonItemFactory();
+            /*
+            Weapon commonWeapon = commonItemFactory.CreateWeapon();
+
+            commonWeapon.DisplayInfo();
+
+            ItemFacotry legendaryItemFactory = new LegendaryItemFactory();
+
+            Weapon legendaryWeapon = legendaryItemFactory.CreateWeapon();
+
+            legendaryWeapon.DisplayInfo();
+            */
+
+            Weapon commonWeapon = commonItemFactory.CreateWeapon();
+            DefensiveItem commonArmor = commonItemFactory.CreateDefensiveItem();
+            UtilityItem commonPotion = commonItemFactory.CreateUtilityItem();
+
+
+            // Get conan the warrior
+            Character conan = gameWorld.WorldCharacters.First(character => character.Name == "Conan");
+
+            // Add items to character's inventory
+            conan.Inventory.AddItem(commonWeapon);
+            conan.Inventory.AddItem(commonArmor);
+            conan.Inventory.AddItem(commonPotion);
+
+            // List inventory items
+            conan.Inventory.ListItems();
+
+            // Equip items
+            conan.EquipItem(commonWeapon);
+            conan.EquipItem(commonArmor);
+            conan.EquipItem(commonPotion);
+
+            // Show currently equipped items
+            conan.ShowEquipment();
+
+            // Character actions
+            /*
+            conan.PerformAction();
+
+            // Set conan state to action
+            conan.SetState(new ActionState(new AttackAction()));
+
+            // Perform an action using the default melee attack
+            conan.PerformAction();
+
+            // Set conant into defending state
+            conan.SetState(new DefendingState());
+            conan.PerformAction();
+            */
+
+            // Enemy creation
+            EnemyManager enemyManager = new EnemyManager();
+
+            Enemy slime = enemyManager.SpawnEnemy("Slime", 1);
+            slime.DisplayInfo();
+            /*
+            Enemy goblin = enemyManager.SpawnEnemy("Goblin", 2);
+            goblin.DisplayInfo();
+
+            Enemy dragon = enemyManager.SpawnEnemy("Dragon", 5);
+            dragon.DisplayInfo();
+            dragon.PerformAction();
+            dragon.SetAction(new MovementAction());
+            dragon.PerformAction();
+            */
+            /*
+            QuestManager questManager = new QuestManager();
+
+            questManager.RegisterObserver(conan);
+
+            // Quest started
+            questManager.UpdateQuestStatus("Quest started: Retrieve the lost artifact");
+
+            // Quest completed
+            questManager.UpdateQuestStatus("Quest completed: Artifact retrieved!");
+            */
+
+
+            // Print the generated map 
+            GameWorldGenerator.PrintMap(gameWorld.WorldMap);
+
+
+            // Initialize gamecontroller
+            GameController controller = new GameController(conan, slime);
+
+            Console.WriteLine("Press 'A' to Attack, 'D' to Defend, 'H' to Heal, 'M' to Move, 'S' to change state. Press 'Q' to quit.");
+
+            
+            // Example how to define custom key mappings
+            /*
+            var x = Console.ReadKey();
+            controller.SetKeyMapping(x.Key, new MoveCommand(conan));
+            */
+
+            while (true)
+            {
+                // Capture keyboard input
+                ConsoleKey key = Console.ReadKey(intercept: true).Key;
+
+                if (key == ConsoleKey.Q)
+                {
+                    Console.WriteLine("Exiting game...");
+                    break;
+                }
+
+                // Handle the input using the controller
+                controller.HandleInput(key);
+            }
+
         }
-        
-        // Item creation examples
-        ItemFacotry commonItemFactory = new CommonItemFactory();
-
-        Weapon commonWeapon = commonItemFactory.CreateWeapon();
-
-        commonWeapon.DisplayInfo();
-
-        ItemFacotry legendaryItemFactory = new LegendaryItemFactory();
-
-        Weapon legendaryWeapon = legendaryItemFactory.CreateWeapon();
-
-        legendaryWeapon.DisplayInfo();
-
-
-        // Character actions
-        // Get arnold the warrior
-        Character arnold = gameWorld.WorldCharacters.First(character => character.Name == "Arnold");
-
-        arnold.PerformAction();
-
-        // Set arnold state to action
-        arnold.SetState(new ActionState(new AttackAction()));
-
-        // Perform an action using the default melee attack
-        arnold.PerformAction();
-
-        // Set arnold into defending state
-        arnold.SetState(new DefendingState());
-        arnold.PerformAction();
-        
-        GameWorldGenerator.PrintMap(gameWorld.WorldMap);
     }
 }
-
