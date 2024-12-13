@@ -1,38 +1,51 @@
-namespace DefaultNamespace;
-
-public interface ICharacterState
+namespace DesignPatternsFantasyRPG.CharacterCreator.Models
 {
-    void HandleState(string characterName);
-}
-
-public class IdleState : ICharacterState
-{
-    public void HandleState(string characterName)
+    public interface ICharacterState
     {
-        Console.WriteLine($"{characterName} is in idle state.");
-    }
-}
+        void HandleState(string characterName, IActionStrategy actionStrategy);
 
-public class ActionState : ICharacterState
-{
-    private IActionStrategy _actionStrategy;
-
-    public ActionState(IActionStrategy actionStrategy)
-    {
-        _actionStrategy = actionStrategy;
+        bool CanUpdateAction(string characterName, IActionStrategy actionStrategy);
     }
 
-    public void HandleState(string characterName)
+    public class IdleState : ICharacterState
     {
-        Console.WriteLine($"{characterName} is in action mode.");
-        _actionStrategy.PerformAction(characterName);
-    }
-}
+        public void HandleState(string characterName, IActionStrategy actionStrategy)
+        {
+            Console.WriteLine($"{characterName} is in idle state.");
+            actionStrategy.PerformAction(characterName);
+        }
 
-public class DefendingState : ICharacterState
-{
-    public void HandleState(string characterName)
+        public bool CanUpdateAction(string characterName, IActionStrategy actionStrategy)
+        {
+            return true;
+        }
+    }
+
+    public class ActionState : ICharacterState
     {
-        Console.WriteLine($"{characterName} is defending.");
+        public void HandleState(string characterName, IActionStrategy actionStrategy)
+        {
+            Console.WriteLine($"{characterName} is in action mode.");
+            actionStrategy.PerformAction(characterName);
+        }
+
+        public bool CanUpdateAction(string characterName, IActionStrategy actionStrategy)
+        {
+            return true;
+        }
+    }
+
+    public class DefendingState : ICharacterState
+    {
+        public void HandleState(string characterName, IActionStrategy actionStrategy)
+        {
+            Console.WriteLine($"{characterName} is defending.");
+        }
+
+        public bool CanUpdateAction(string characterName, IActionStrategy actionStrategy)
+        {
+            Console.WriteLine($"{characterName} is currently in defeding state and cannot change it's action to {actionStrategy}.");
+            return false;
+        }
     }
 }
