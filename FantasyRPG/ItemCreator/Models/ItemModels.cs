@@ -1,72 +1,89 @@
-namespace FantasyRPG.ItemCreator.Models;
-
-public abstract class Item
+﻿namespace DesignPatternsFantasyRPG.ItemCreator.Models
 {
-    private static int nextId = 1;
-    
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public RarityEnum Rarity { get; set; }
-
-
-    public Item(string name, string description, RarityEnum rarity)
+    public abstract class Item
     {
-        Id = nextId++;
-        Name = name;
-        Description = description;
-        Rarity = rarity;
+        private static int nextId = 1;
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public RarityEnum Rarity { get; set; }
+        public int Value { get; set; }
+
+        public ItemTypeEnum ItemType { get; set; }
+        
+        public Item(string name, string description, RarityEnum rarity) {
+            Id = nextId++;
+            Name = name;
+            Description = description;
+            Rarity = rarity;
+        }
+
+        public abstract void DisplayInfo();
     }
 
-    public abstract void DisplayInfo();
-}
-
-public class Weapon : Item 
-{
-    private WeaponTypeEnum WeaponType { get; set; }
-    
-    public Weapon(string name, string description, RarityEnum rarity, WeaponTypeEnum type) : base(name, description, rarity) { 
-        WeaponType = type;
-    }
-
-    public override void DisplayInfo()
+    public class Weapon : Item
     {
-        Console.WriteLine($"{Name} is a weapon of {Rarity} rarity. Description: {Description}");
+        private WeaponTypeEnum WeaponType { get; set; }
+
+        public Weapon(string name, string description, RarityEnum rarity, WeaponTypeEnum type, int value) : base(name, description, rarity) { 
+            WeaponType = type;
+            Value = value;
+            ItemType = ItemTypeEnum.Weapon;
+        }
+
+        public override void DisplayInfo()
+        {
+            Console.WriteLine($"{Name} is a weapon of {Rarity} rarity. Description: {Description}");
+        }
     }
-}
 
-public class Potion : Item
-{
-    public Potion(string name, string description, RarityEnum rarity) : base(name, description, rarity) { }
-
-    public override void DisplayInfo()
+    public class UtilityItem : Item
     {
-        Console.WriteLine($"{Name} is a potion of {Rarity} rarity. Description: {Description}");
+        public UtilityItem(string name, string description, RarityEnum rarity, int value) : base(name, description, rarity) 
+        {
+            Value = value;
+            ItemType = ItemTypeEnum.Utility;
+        }
+
+        public override void DisplayInfo()
+        {
+            Console.WriteLine($"{Name} is a UtilityItem of {Rarity} rarity. Description: {Description}");
+        }
     }
-}
 
-
-public class Armor : Item
-{
-    public Armor(string name, string description, RarityEnum rarity) : base(name, description, rarity) { }
-
-    public override void DisplayInfo()
+    public class DefensiveItem : Item
     {
-        Console.WriteLine($"{Name} is a armor of {Rarity} rarity. Description: {Description}");
+        public DefensiveItem(string name, string description, RarityEnum rarity, int value) : base(name, description, rarity) 
+        {
+            Value = value;
+            ItemType = ItemTypeEnum.Defensive;
+        }
+
+        public override void DisplayInfo()
+        {
+            Console.WriteLine($"{Name} is a DefensiveItem of {Rarity} rarity. Description: {Description}");
+        }
     }
-}
 
+    public enum RarityEnum
+    {
+        Common,
+        Magic,
+        Rare,
+        Legendary
+    }
 
-public enum RarityEnum
-{
-    Common,
-    Magic,
-    Rare,
-    Legendary
-}
+    public enum WeaponTypeEnum
+    {
+        Melee,
+        Ranged
+    }
 
-public enum WeaponTypeEnum
-{
-    Melee,
-    Ranged
+    public enum ItemTypeEnum
+    {
+        Weapon,
+        Defensive,
+        Utility
+    }
 }

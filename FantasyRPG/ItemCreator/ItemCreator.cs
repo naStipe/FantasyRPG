@@ -1,80 +1,83 @@
-namespace FantasyRPG.ItemCreator.Models;
+﻿using DesignPatternsFantasyRPG.ItemCreator.Models;
 
-public class ItemFactory
+namespace DesignPatternsFantasyRPG.ItemCreator
 {
-    public abstract Weapon CreateWeapon();
-    public abstract Potion CreatePotion();
-    public abstract Armor CreateArmor();
-}
-
-public class CommonItemFactory : ItemFacotry
-{
-    public override Weapon CreateWeapon()
+    public abstract class ItemFacotry
     {
-        return new Weapon("Sword", "Basic sword", RarityEnum.Common, WeaponTypeEnum.Melee);
+        public abstract Weapon CreateWeapon();
+        public abstract UtilityItem CreateUtilityItem();
+        public abstract DefensiveItem CreateDefensiveItem();
     }
 
-    public override Item CreatePotion()
+    public class CommonItemFactory : ItemFacotry
     {
-        throw new NotImplementedException();
+        public override Weapon CreateWeapon()
+        {
+            return new Weapon("Sword", "Basic sword", RarityEnum.Common, WeaponTypeEnum.Melee, 100);
+        }
+
+        public override UtilityItem CreateUtilityItem()
+        {
+            return new UtilityItem("Healing potion", "Basic healing potion", RarityEnum.Common, 20);
+        }
+
+        public override DefensiveItem CreateDefensiveItem()
+        {
+            return new DefensiveItem("Body armor", "Leather armor", RarityEnum.Common, 50);
+        }
     }
 
-    public override Item CreateArmor()
+    public class MagicItemFactory : ItemFacotry
     {
-        throw new NotImplementedException();
-    }
-}
+        public override Weapon CreateWeapon()
+        {
+            return new Weapon("Elfwood staff", "Magical staff", RarityEnum.Magic, WeaponTypeEnum.Ranged, 150);
+        }
 
-public class MagicItemFactory : ItemFacotry
-{
-    public override Weapon CreateWeapon()
-    {
-        return new Weapon("Elfwood staff", "Magical staff", RarityEnum.Magic, WeaponTypeEnum.Ranged);
-    }
+        public override UtilityItem CreateUtilityItem()
+        {
+            throw new NotImplementedException();
+        }
 
-    public override Potion CreatePotion()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Armor CreateArmor()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-public class RareItemFactory : ItemFacotry
-{
-    public override Weapon CreateWeapon()
-    {
-        return new Weapon("Golden bow", "Rare bow", RarityEnum.Rare, WeaponTypeEnum.Ranged);
+        public override DefensiveItem CreateDefensiveItem()
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public override Potion CreatePotion()
+    public class RareItemFactory : ItemFacotry
     {
-        throw new NotImplementedException();
+        public override Weapon CreateWeapon()
+        {
+            return new Weapon("Golden bow", "Rare bow", RarityEnum.Rare, WeaponTypeEnum.Ranged, 200);
+        }
+
+        public override UtilityItem CreateUtilityItem()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override DefensiveItem CreateDefensiveItem()
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public override Armor CreateArmor()
+    public class LegendaryItemFactory : ItemFacotry
     {
-        throw new NotImplementedException();
-    }
-}
+        public override Weapon CreateWeapon()
+        {
+            return new Weapon("Punching gloves of the northern star", "Legendary gloves", RarityEnum.Legendary, WeaponTypeEnum.Melee, 9001);
+        }
 
-public class LegendaryItemFactory : ItemFacotry
-{
-    public override Weapon CreateWeapon()
-    {
-        return new Weapon("Punching gloves of the northern star", "Legendary gloves", RarityEnum.Legendary, WeaponTypeEnum.Melee);
-    }
+        public override UtilityItem CreateUtilityItem()
+        {
+            throw new NotImplementedException();
+        }
 
-    public override Potion CreatePotion()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Armor CreateArmor()
-    {
-        throw new NotImplementedException();
+        public override DefensiveItem CreateDefensiveItem()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
